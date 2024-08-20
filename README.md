@@ -1,0 +1,2 @@
+# TREND
+ECE Senior Design
