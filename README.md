@@ -1,7 +1,7 @@
 # TREND
-ECE Senior Design
+### ECE Senior Design
+
 Authors:
-Gavin Hendrix
-Rohan Rajesh
-Zach Kouba
-test
+- Gavin Hendrix
+- Rohan Rajesh
+- Zack Kouba
