@@ -60,4 +60,6 @@ jobs:
       # Compare the new and previous executables
       - name: Compare Executables
         run: |
-          diffoscope previous_executable/TREND dist/TREND
+        #  diffoscope previous_executable/TREND dist/TREND
+          trydiffoscope --webbrowser previous_executable/TREND dist/TREND
+
