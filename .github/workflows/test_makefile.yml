@@ -32,22 +32,23 @@ jobs:
       - name: Build executable
         run: |
           make build
-      
-      # Upload the executable as an artifact
-      - name: Upload Executable
-        uses: actions/upload-artifact@v4
-        with:
-          name: flask-app-executable
-          path: dist/
 
       # Download the previous executable artifact
       - name: Download Previous Executable
         uses: actions/download-artifact@v4
         with:
-          name: flask-app-executable
+          name: TREND_executable
           path: previous_executable
+        continue-on-error: true
+      
+      # Upload the executable as an artifact
+      - name: Upload Executable
+        uses: actions/upload-artifact@v4
+        with:
+          name: TREND_executable
+          path: dist/
 
       # Compare the new and previous executables
       - name: Compare Executables
         run: |
-          diffoscope previous_executable/my_flask_app dist/my_flask_app
+          diffoscope previous_executable/TREND dist/TREND
