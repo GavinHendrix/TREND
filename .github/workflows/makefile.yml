@@ -20,9 +20,6 @@ jobs:
     - name: Build Binary Executable
       run: make build
 
-    # - name: Run Flask App
-    #   run: make run
-
     # - name: Run Tests
     #   run: make test
 
