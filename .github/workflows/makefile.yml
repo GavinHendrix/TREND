@@ -24,4 +24,4 @@ jobs:
       run: make test
 
     - name: Remove Virtual Environment
-    run: make clean
+      run: make clean
