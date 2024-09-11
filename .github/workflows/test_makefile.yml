@@ -23,11 +23,16 @@ jobs:
         with:
           python-version: '3.10'
 
+      # Install diffoscope
+      - name: Install diffoscope
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y diffoscope
+
       # Install dependencies
       - name: Install dependencies
         run: |
           make install
-          sudo apt-get install -y libarchive-dev
 
       # Build the new executable
       - name: Build executable
@@ -38,8 +43,8 @@ jobs:
       - name: Download Previous Executable
         uses: actions/download-artifact@v4
         with:
-          name: TREND_executable
-          path: previous_executable
+          name: TREND_executable  # Ensure this matches the name used during upload
+          path: previous_executable/
         continue-on-error: true
       
       # Upload the executable as an artifact
@@ -47,7 +52,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: TREND_executable
-          path: dist/
+          path: dist/  # Ensure this is where the newly built executable is located
 
       # Compare the new and previous executables
       - name: Compare Executables
