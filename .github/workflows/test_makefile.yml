@@ -1,0 +1,53 @@
+name: Build and Compare Executables
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Set up Python environment
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      # Install dependencies
+      - name: Install dependencies
+        run: |
+          make install
+
+      # Build the new executable
+      - name: Build executable
+        run: |
+          make build
+      
+      # Upload the executable as an artifact
+      - name: Upload Executable
+        uses: actions/upload-artifact@v3
+        with:
+          name: flask-app-executable
+          path: dist/
+
+      # Download the previous executable artifact
+      - name: Download Previous Executable
+        uses: actions/download-artifact@v3
+        with:
+          name: flask-app-executable
+          path: previous_executable
+
+      # Compare the new and previous executables
+      - name: Compare Executables
+        run: |
+          diffoscope previous_executable/my_flask_app dist/my_flask_app
