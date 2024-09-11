@@ -44,8 +44,11 @@ jobs:
         with:
           name: TREND_executable  # Ensure this matches the name used during upload
           path: previous_executable/
-        run: ls -al previous_executable
         continue-on-error: true
+
+      # This previous executable folder items
+      - name: List files in previous_executable directory
+        run: ls -al previous_executable
       
       # Upload the executable as an artifact
       - name: Upload Executable
