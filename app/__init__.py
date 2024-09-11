@@ -1,7 +1,9 @@
 from flask import Flask, render_template
 
+
 def create_app(name):
     app = Flask(name, template_folder='app/templates')
+    # app.static_folder = 'static'
     app.config['SECRET_KEY'] = 'TREND IS THE BEST'
     
     @app.route('/')
