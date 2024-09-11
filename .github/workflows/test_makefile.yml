@@ -26,7 +26,6 @@ jobs:
       # Install diffoscope
       - name: Install diffoscope
         run: |
-          sudo apt-get update
           sudo apt-get install -y diffoscope
 
       # Install dependencies
