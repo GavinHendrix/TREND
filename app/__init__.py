@@ -5,8 +5,8 @@ def create_app(name):
     app.config['SECRET_KEY'] = 'TREND IS THE BEST'
     
     @app.route('/')
-    def initial_page():
-        return "Hello"
+    def home_page():
+        return render_template("home.html")
     
     @app.route('/base')
     def base_page():

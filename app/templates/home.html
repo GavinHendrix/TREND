@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TREND: Tailored Recommendations</title>
+    <link rel="stylesheet" href="../static/css/styles.css">
+</head>
+<body>
+    <nav>
+        <div class="logo">TREND</div>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li class="dropdown">
+                <a href="#" class="dropbtn">Recommendations</a>
+                <div class="dropdown-content">
+                    <a href="#">Movies</a>
+                    <a href="#">Restaurants</a>
+                    <a href="#">Activities</a>
+                </div>
+            </li>
+            <li><a href="#">Contact</a></li>
+            <li><a href="#">Login</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <div class="panel">
+            <h2>Movies</h2>
+            <button onclick="selectOption('Movies')">Explore Movies</button>
+        </div>
+        <div class="panel">
+            <h2>Restaurants</h2>
+            <button onclick="selectOption('Restaurants')">Explore Restaurants</button>
+        </div>
+        <div class="panel">
+            <h2>Activities</h2>
+            <button onclick="selectOption('Activities')">Explore Activities</button>
+        </div>
+    </div>
+
+    <script src="../static/js/app.js"></script>
+</body>
+</html>
