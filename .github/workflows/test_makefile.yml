@@ -15,7 +15,7 @@ jobs:
     steps:
       # Checkout the repository
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       # Set up Python environment
       - name: Set up Python
@@ -35,14 +35,14 @@ jobs:
       
       # Upload the executable as an artifact
       - name: Upload Executable
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: flask-app-executable
           path: dist/
 
       # Download the previous executable artifact
       - name: Download Previous Executable
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: flask-app-executable
           path: previous_executable
