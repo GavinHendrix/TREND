@@ -32,7 +32,6 @@ jobs:
       - name: Install dependencies
         run: |
           make install
-          sudo apt install trydiffoscope
 
       # Build the new executable
       - name: Build executable
@@ -40,27 +39,27 @@ jobs:
           make build
 
       # Download the previous executable artifact
-      - name: Download Previous Executable
-        uses: actions/download-artifact@v4
-        # with:
-        #   name: TREND  # Ensure this matches the name used during upload
-        #   path: previous_executable/
-        continue-on-error: true
+      # - name: Download Previous Executable
+      #   uses: actions/download-artifact@v4
+      #   with:
+      #     name: TREND  # Ensure this matches the name used during upload
+      #     path: ./previous_executable
+      #   continue-on-error: true
 
       # This previous executable folder items
-      - name: List files in previous_executable directory
-        run: ls -al previous_executable
-        continue-on-error: true
+      # - name: List files in previous_executable directory
+      #   run: ls -al previous_executable
+      #   continue-on-error: true
       
       # Upload the executable as an artifact
       - name: Upload Executable
         uses: actions/upload-artifact@v4
         with:
           name: TREND
-          path: dist/  # Ensure this is where the newly built executable is located
+          path: dist/
 
       # Compare the new and previous executables
-      - name: Compare Executables
-        run: trydiffoscope --webbrowser previous_executable/TREND dist/TREND
+      # - name: Compare Executables
+      #   run: trydiffoscope --webbrowser previous_executable/TREND dist/TREND
 
       # Add additional here
