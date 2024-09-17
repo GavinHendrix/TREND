@@ -11,7 +11,7 @@ PLACES_URL = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json'
 def get_nearby_places() :
     location = request.args.get('location')  # Format: 'lat,lng'
     radius = request.args.get('radius')  # In meters
-    place_type = request.args.get('type') # 'restraunt'
+    place_type = request.args.get('type') # 'restaurant'
 
     params = {
         'location':location,
