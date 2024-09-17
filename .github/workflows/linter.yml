@@ -1,0 +1,28 @@
+name: Linter CI
+
+on: 
+  push:
+    branches: [ "main", "linter-workflow" ]
+  pull-request:
+    branches: [ "main", "develop", "linter-workflow" ]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Setup Python
+      users: actions/setup-python@v3
+      with:
+        python-version: 3.10
+
+    - name: Install Dependencies
+      run: |
+        make install
+        pip install flake8
+
+    - name: Lint Python Files
+      run: flake8 .
