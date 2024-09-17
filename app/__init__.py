@@ -59,11 +59,14 @@ def create_app(name):
             return redirect(url_for('login'))
         return render_template('register.html')
 
-    @app.route('/logout')
-    @login_required
-    def logout():
-        logout_user()
-        return redirect(url_for('home'))
+    from app.src.auth.logout import auth_bp as logout_bp
+    app.register_blueprint(logout_bp, url_prefix='/auth')
+    
+    # @app.route('/logout')
+    # @login_required
+    # def logout():
+    #     logout_user()
+    #     return redirect(url_for('home'))
 
     @app.route('/movies')
     def movies():
