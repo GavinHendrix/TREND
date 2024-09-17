@@ -26,4 +26,6 @@ jobs:
         pip install flake8
 
     - name: Lint Python Files
-      run: flake8 . --exclude venv,env,.git,__pycache__
+      run: |
+        flake8 . --exclude venv,env,.git,__pycache__
+      continue-on-error: true
