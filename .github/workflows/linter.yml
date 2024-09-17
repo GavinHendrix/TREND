@@ -3,7 +3,7 @@ name: Linter CI
 on: 
   push:
     branches: [ "main", "linter-workflow" ]
-  pull-request:
+  pull_request:
     branches: [ "main", "develop", "linter-workflow" ]
 
 jobs:
