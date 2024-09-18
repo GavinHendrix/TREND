@@ -14,7 +14,8 @@ def login():
 
         if user and checkpw(password, user.password.encode('utf-8')):
             login_user(user)
+            flash('Login successful!', 'success')
             return redirect(url_for('home'))
         else:
-            flash('Invalid username or password.')
+            flash('Invalid username or password.', 'danger')
     return render_template('login.html')
