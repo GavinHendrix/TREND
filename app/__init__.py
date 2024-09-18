@@ -30,22 +30,12 @@ def create_app(name):
     from app.src.auth.login import login_bp
     from app.src.auth.register import register_bp
     from app.src.auth.logout import logout_bp
+    from app.src.error import errors_bp
+
     app.register_blueprint(login_bp)
     app.register_blueprint(register_bp)
     app.register_blueprint(logout_bp)
-    
-    # @app.route('/register', methods=['GET', 'POST'])
-    # def register():
-    #     if request.method == 'POST':
-    #         username = request.form['username']
-    #         password = request.form['password'].encode('utf-8')
-    #         hashed_password = hashpw(password, gensalt(12))
-    #         new_user = User(username=username, password=hashed_password.decode('utf-8'))
-    #         db.session.add(new_user)
-    #         db.session.commit()
-    #         flash('Registration successful! You can now log in.')
-    #         return redirect(url_for('login'))
-    #     return render_template('register.html')
+    app.register_blueprint(errors_bp)
 
     @app.route('/movies')
     def movies():
