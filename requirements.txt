@@ -12,3 +12,4 @@ requests==2.32.3
 pyinstaller==6.10.0
 diffoscope
 bcrypt==4.2.0
+python-dotenv==1.0.1

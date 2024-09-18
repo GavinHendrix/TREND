@@ -4,12 +4,16 @@ from flask_login import LoginManager, UserMixin, login_user, login_required, log
 from bcrypt import hashpw, checkpw, gensalt
 from app.src.db.init import db
 from app.src.db.user import User
+from app.src.config import get_config
+from dotenv import load_dotenv
+
+load_dotenv()
 
 def create_app(name):
     app = Flask(name, template_folder='app/templates')
     app.static_folder = 'app/static'
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
-    app.config['SECRET_KEY'] = 'TREND IS THE BEST'
+
+    app.config.from_object(get_config())
 
     db.init_app(app)
     login_manager = LoginManager()
