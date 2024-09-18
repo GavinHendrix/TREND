@@ -31,22 +31,16 @@ def create_app(name):
     from app.src.auth.register import register_bp
     from app.src.auth.logout import logout_bp
     from app.src.error import errors_bp
+    from app.src.rec.activities import activities_bp
+    from app.src.rec.dining import dining_bp
+    from app.src.rec.movies import movies_bp
 
     app.register_blueprint(login_bp)
     app.register_blueprint(register_bp)
     app.register_blueprint(logout_bp)
     app.register_blueprint(errors_bp)
-
-    @app.route('/movies')
-    def movies():
-        return render_template('movies.html')
-
-    @app.route('/dining')
-    def dining():
-        return render_template('dining.html')
-
-    @app.route('/activities')
-    def activities():
-        return render_template('activities.html')
+    app.register_blueprint(activities_bp)
+    app.register_blueprint(dining_bp)
+    app.register_blueprint(movies_bp)
     
     return app
