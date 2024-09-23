@@ -13,8 +13,12 @@ def register():
         password = request.form['password'].encode('utf-8')
         hashed_password = hashpw(password, gensalt(12))
         new_user = User(username=username, password=hashed_password.decode('utf-8'))
-        db.session.add(new_user)
-        db.session.commit()
-        flash('Registration successful!', 'success')
-        return redirect(url_for('login.login'))
+
+        if new_user.query.filter_by(username=username).first():
+            flash(f'Username "{username}" already exists. Please create another one.', 'danger')
+        else:
+            db.session.add(new_user)
+            db.session.commit()
+            flash('Registration successful!', 'success')
+            return redirect(url_for('login.login'))
     return render_template('register.html')
