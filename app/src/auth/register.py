@@ -15,6 +15,6 @@ def register():
         new_user = User(username=username, password=hashed_password.decode('utf-8'))
         db.session.add(new_user)
         db.session.commit()
-        flash('Registration successful! You can now log in.')
+        flash('Registration successful!', 'success')
         return redirect(url_for('login.login'))
     return render_template('register.html')
