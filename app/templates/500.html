@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}TREND - Server Error{% endblock %}
+{% block content %}
+<div class="text-center mt-5">
+    <h1>Oops! Something went wrong (500)</h1>
+    <p>We're having some trouble processing your request right now. Please try again later.</p>
+
+    <div class="row mt-4">
+        <div class="col-md-4 offset-md-4">
+            <div class="card">
+                <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="500 Error">
+                <div class="card-body">
+                    <h5 class="card-title">Return Home</h5>
+                    <p class="card-text">Let's take you back to the homepage and start fresh.</p>
+                    <a href="{{ url_for('home') }}" class="btn btn-primary">Go to Home</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
