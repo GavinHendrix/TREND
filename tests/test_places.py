@@ -15,7 +15,9 @@ def client(app):
 def test_get_nearby_places(client):
     response = client.get('/api/places', query_string= {
                               'location': '40.428263096503805,-86.91173853522032',
-                              'radius': '1000',
+                              'radius': '400',
                               'type': 'restaurant'}
                          )
     assert (response.status_code==200)
+    print(response.data) # returns a crazy large amount of data
+    

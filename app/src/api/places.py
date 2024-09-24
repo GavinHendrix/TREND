@@ -30,3 +30,5 @@ def get_nearby_places() :
     data = response.json()
 
     return jsonify(data)
+
+# call only works if API key is .env
