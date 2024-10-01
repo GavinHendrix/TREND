@@ -13,3 +13,4 @@ pyinstaller==6.10.0
 diffoscope
 bcrypt==4.2.0
 python-dotenv==1.0.1
+openai==1.50.2
