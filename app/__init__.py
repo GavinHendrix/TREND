@@ -38,6 +38,7 @@ def create_app(name):
     from app.src.rec.activities import activities_bp
     from app.src.rec.dining import dining_bp
     from app.src.rec.movies import movies_bp
+    from app.src.surv.questions import survey_bp
 
     app.register_blueprint(login_bp)
     app.register_blueprint(register_bp)
@@ -46,5 +47,6 @@ def create_app(name):
     app.register_blueprint(activities_bp)
     app.register_blueprint(dining_bp)
     app.register_blueprint(movies_bp)
+    app.register_blueprint(survey_bp)
     
     return app
