@@ -1,8 +1,5 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
-from flask_login import login_user, current_user, login_required
-from bcrypt import checkpw
-from app.src.db.user import User
-from flask import Blueprint, render_template
+from flask_login import current_user, login_required
 from app.src.db.survey import Survey
 from app.src.db.init import db
 
@@ -12,7 +9,6 @@ survey_bp = Blueprint('survey', __name__)
 @login_required
 def survey():
     if request.method == 'POST':
-        # Collect responses from the form
         responses = Survey(
             user_id=current_user.id,
             question1=request.form['question1'],

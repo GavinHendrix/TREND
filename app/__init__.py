@@ -1,7 +1,5 @@
-from flask import Flask, render_template, redirect, url_for, request, flash
-from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
-from bcrypt import hashpw, checkpw, gensalt
+from flask import Flask, render_template
+from flask_login import LoginManager
 from app.src.db.init import db
 from app.src.db.user import User
 from app.src.config import get_config
