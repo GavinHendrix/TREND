@@ -14,13 +14,13 @@ def survey():
             question1=request.form['question1'],
             question2=request.form['question2'],
             question3=request.form['question3'],
-            # question4=request.form['question4'],
-            # question5=request.form['question5'],
-            # question6=request.form['question6'],
-            # question7=request.form['question7'],
-            # question8=request.form['question8'],
-            # question9=request.form['question9'],
-            # question10=request.form['question10'],
+            question4=request.form['question4'],
+            question5=request.form['question5'],
+            question6=request.form['question6'],
+            question7=request.form['question7'],
+            question8=request.form['question8'],
+            question9=request.form['question9'],
+            question10=request.form['question10'],
         )
         db.session.add(responses)
         db.session.commit()
