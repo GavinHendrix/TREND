@@ -37,6 +37,8 @@ def create_app(name):
     from app.src.rec.dining import dining_bp
     from app.src.rec.movies import movies_bp
     from app.src.surv.questions import survey_bp
+    from app.src.api.places import places_bp
+    from app.src.api.openai import openai_bp
 
     app.register_blueprint(login_bp)
     app.register_blueprint(register_bp)
@@ -46,5 +48,7 @@ def create_app(name):
     app.register_blueprint(dining_bp)
     app.register_blueprint(movies_bp)
     app.register_blueprint(survey_bp)
+    app.register_blueprint(places_bp, url_prefix='/api')
+    app.register_blueprint(openai_bp, url_prefix='/api')
     
     return app
