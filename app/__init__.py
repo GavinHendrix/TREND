@@ -1,7 +1,5 @@
-from flask import Flask, render_template, redirect, url_for, request, flash
-from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
-from bcrypt import hashpw, checkpw, gensalt
+from flask import Flask, render_template
+from flask_login import LoginManager
 from app.src.db.init import db
 from app.src.db.user import User
 from app.src.config import get_config
@@ -38,6 +36,7 @@ def create_app(name):
     from app.src.rec.activities import activities_bp
     from app.src.rec.dining import dining_bp
     from app.src.rec.movies import movies_bp
+    from app.src.surv.questions import survey_bp
     from app.src.api.places import places_bp
     from app.src.api.openai import openai_bp
 
@@ -48,7 +47,8 @@ def create_app(name):
     app.register_blueprint(activities_bp)
     app.register_blueprint(dining_bp)
     app.register_blueprint(movies_bp)
+    app.register_blueprint(survey_bp)
     app.register_blueprint(places_bp, url_prefix='/api')
     app.register_blueprint(openai_bp, url_prefix='/api')
-
+    
     return app
