@@ -2,5 +2,36 @@
 {% block title %}TREND - Activities{% endblock %}
 {% block content %}
 <h2>Activity Recommendations</h2>
-<p>Here are some fun activities to try!</p>
+<p id="loadingMessage">Finding fun activities near you...</p>
+<div id="placesList"></div>
+
+<script>
+    if(navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+            const latitude = position.coords.latitude;
+            const longitude = position.coords.longitude;
+
+            // Now you make the API call to your backend to get nearby places
+            fetch(`/api/places?location=${latitude},${longitude}&radius=1500&type=bowling_alley`)
+                .then(response => response.json())
+                .then(data => {
+                    // Remove the loading message
+                    document.getElementById('loadingMessage').style.display = 'none';
+                    
+                    // Process and display the results
+                    const placesList = document.getElementById('placesList');
+                    data.results.forEach(place => {
+                        const placeElement = document.createElement('p');
+                        placeElement.textContent = place.name;
+                        placesList.appendChild(placeElement);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching places:', error);
+                });
+        });
+    } else {
+        alert('Geolocation is not supported by this browser.');
+    }
+</script>
 {% endblock %}
