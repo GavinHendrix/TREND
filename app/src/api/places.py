@@ -26,7 +26,6 @@ def get_nearby_places() :
         'type':place_type,
         'key':GOOGLE_API_KEY,
         'opening_hours': {'open_now': True}
-        #,'price_level': 0/1/2/3/4  //0:free, 1:Inexpensive, 2:Moderate, 3:Expensive, 4:Very Expensive
     }
     response = requests.get(PLACES_URL, params=params)
     data = response.json()
@@ -34,3 +33,5 @@ def get_nearby_places() :
     return jsonify(data)
 
 # call only works if API key is .env
+# Post call filters(Cannot be a param)
+#'price_level': 0/1/2/3/4  //0:free, 1:Inexpensive, 2:Moderate, 3:Expensive, 4:Very Expensive
