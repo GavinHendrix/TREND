@@ -24,7 +24,8 @@ def get_nearby_places() :
         'location':location,
         'radius':radius,
         'type':place_type,
-        'key':GOOGLE_API_KEY
+        'key':GOOGLE_API_KEY,
+        'opening_hours': {'open_now': True}
     }
     response = requests.get(PLACES_URL, params=params)
     data = response.json()
