@@ -1,50 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TREND: Tailored Recommendations</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-</head>
-<body>
-    <nav>
-        <div class="logo">TREND</div>
-        <ul>
-            <li><a href="#">Home</a></li>
-            <li class="dropdown">
-                <a href="#" class="dropbtn">Recommendations</a>
-                <div class="dropdown-content">
-                    <a href="#">Movies</a>
-                    <a href="#">Restaurants</a>
-                    <a href="#">Activities</a>
-                </div>
-            </li>
-            <li><a href="#">Contact</a></li>
-        </ul>
-        <div class="login">
-            <li><a href="login.html">Login</a></li>
-        </div>
-    </nav>
+{% extends 'base.html' %}
+{% block title %}TREND - Home{% endblock %}
+{% block content %}
+<div class="text-center mt-5">
+    <h1>Welcome to TREND</h1>
+    <p>Discover recommendations for movies, dining, and activities.</p>
 
-    <div class="container">
-        <div class="panel">
-            <h2>Movies</h2>
-            <button onclick="selectOption('Movies')">Explore Movies</button>
+    <div class="row mt-4">
+        <div class="col-md-4">
+            <div class="card">
+                <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="Movies">
+                <div class="card-body">
+                    <h5 class="card-title">Movies</h5>
+                    <p class="card-text">Find the latest and greatest movies to watch!</p>
+                    <a href="{{ url_for('movies.movies') }}" class="btn btn-primary">Explore Movies</a>
+                </div>
+            </div>
         </div>
-        <div class="panel">
-            <h2>Restaurants</h2>
-            <button onclick="selectOption('Restaurants')">Explore Restaurants</button>
+        <div class="col-md-4">
+            <div class="card">
+                <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="Dining">
+                <div class="card-body">
+                    <h5 class="card-title">Dining</h5>
+                    <p class="card-text">Check out the top dining spots in your area.</p>
+                    <a href="{{ url_for('dining.dining') }}" class="btn btn-primary">Explore Dining</a>
+                </div>
+            </div>
         </div>
-        <div class="panel">
-            <h2>Activities</h2>
-            <button onclick="selectOption('Activities')">Explore Activities</button>
+        <div class="col-md-4">
+            <div class="card">
+                <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="Activities">
+                <div class="card-body">
+                    <h5 class="card-title">Activities</h5>
+                    <p class="card-text">Discover exciting activities and adventures!</p>
+                    <a href="{{ url_for('activities.activities') }}" class="btn btn-primary">Explore Activities</a>
+                </div>
+            </div>
         </div>
     </div>
-
-    <script src="../static/js/app.js"></script>
-
-    <footer>
-        <p>&copy; 2024 TREND. All rights reserved.</p>
-    </footer>
-</body>
-</html>
+</div>
+{% endblock %}

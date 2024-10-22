@@ -1,7 +1,10 @@
 .env
 *.env
 venv/
-app/__pycache__/
+**/__pycache__/
 dist/
 build/
 *.spec
+tests/
+instance/
+src/api/__pycache__/

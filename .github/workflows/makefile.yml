@@ -2,9 +2,9 @@ name: Makefile CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "*" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "*" ]
 
 jobs:
   build:
@@ -26,8 +26,8 @@ jobs:
         name: TREND
         path: dist/ 
 
-    # - name: Run Tests
-    #   run: make test
+    #- name: Run Tests
+      #run: make test
 
     - name: Remove Virtual Environment
       run: make clean

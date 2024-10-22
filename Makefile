@@ -29,10 +29,14 @@ clean:
 
 clean-build:
 	@echo "-> Removing Build"
-	rm -rf build dist $(APP_NAME).spec
+	rm -rf build dist instance $(APP_NAME).spec
 
 test: $(VENV)/bin/activate
 	@echo "-> Running Tests"
-	. $(VENV)/bin/activate && $(VENV)/bin/pytest
+	. $(VENV)/bin/activate && $(VENV)/bin/pytest -s
 
-.PHONY: all install run clean clean-build test build
+source: 
+	@echo "-> Sourcing Virtual Environment"
+	. $(VENV)/bin/activate
+
+.PHONY: all install run clean clean-build test build source
