@@ -2,6 +2,7 @@ from flask import Flask, render_template
 from flask_login import LoginManager
 from app.src.db.init import db
 from app.src.db.user import User
+from app.src.db.survey import Survey
 from app.src.config import get_config
 from dotenv import load_dotenv
 
