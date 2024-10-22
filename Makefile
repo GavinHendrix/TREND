@@ -29,7 +29,7 @@ clean:
 
 clean-build:
 	@echo "-> Removing Build"
-	rm -rf build dist $(APP_NAME).spec
+	rm -rf build dist instance $(APP_NAME).spec
 
 test: $(VENV)/bin/activate
 	@echo "-> Running Tests"
