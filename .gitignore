@@ -7,3 +7,4 @@ build/
 *.spec
 tests/
 instance/
+src/api/__pycache__/

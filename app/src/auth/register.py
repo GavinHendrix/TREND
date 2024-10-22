@@ -9,6 +9,10 @@ register_bp = Blueprint('register', __name__)
 @register_bp.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
+        if (request.form['password'] != request.form['confirm_password']):
+            flash("Passwords don't match", 'danger')
+            return redirect(url_for('register.register'))
+
         username = request.form['username']
         password = request.form['password'].encode('utf-8')
         hashed_password = hashpw(password, gensalt(12))
