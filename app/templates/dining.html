@@ -10,24 +10,37 @@
         navigator.geolocation.getCurrentPosition(function (position) {
             const latitude = position.coords.latitude;
             const longitude = position.coords.longitude;
+            const userId = "{{ current_user.id }}";
 
             // Now you make the API call to your backend to get nearby places
-            fetch(`/api/places?location=${latitude},${longitude}&radius=500&type=restaurant`)
-                .then(response => response.json())
+            fetch(`/api/places?location=${latitude},${longitude}&user_id=${userId}&type=restaurant`)
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(errorData => {
+                            throw new Error(errorData.error);
+                        });
+                    }
+                    return response.json();
+                })
                 .then(data => {
                     // Remove the loading message
                     document.getElementById('loadingMessage').style.display = 'none';
                     
                     // Process and display the results
                     const placesList = document.getElementById('placesList');
-                    data.results.forEach(place => {
-                        const placeElement = document.createElement('p');
-                        placeElement.textContent = place.name;
-                        placesList.appendChild(placeElement);
-                    });
+                    if (data.results.length === 0) {
+                        placesList.textContent = 'No places found near your location.';
+                    } else {
+                        data.results.forEach(place => {
+                            const placeElement = document.createElement('p');
+                            placeElement.textContent = place.name;
+                            placesList.appendChild(placeElement);
+                        });
+                    }
                 })
                 .catch(error => {
                     console.error('Error fetching places:', error);
+                    document.getElementById('loadingMessage').textContent = error.message;
                 });
         });
     } else {
