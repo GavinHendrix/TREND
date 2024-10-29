@@ -5,7 +5,7 @@ from pathlib import Path
 from flask import Blueprint, request, jsonify, flash
 from app.src.db.dining_survey import DiningSurvey
 
-places_bp = Blueprint('places_bp', __name__)
+dining_places_bp = Blueprint('dining_places_bp', __name__)
 
 # Get Path for .env File and Load
 env_path = Path(__file__).resolve().parent.parent.parent.parent / '.env'
@@ -14,7 +14,7 @@ GOOGLE_API_KEY = os.getenv('GOOGLE_API_KEY')
 
 PLACES_URL = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json'
 
-@places_bp.route('/places', methods=['GET'])
+@dining_places_bp.route('/places', methods=['GET'])
 def get_nearby_places():
     user_id = int(request.args.get('user_id'))
     location = request.args.get('location')  # Format: 'lat,lng'
