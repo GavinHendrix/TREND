@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %}Survey{% endblock %}
+{% block title %}DiningSurvey{% endblock %}
 {% block content %}
 <!DOCTYPE html>
 <html lang="en">
@@ -12,7 +12,7 @@
 <body>
     <div class="container mt-5">
         <h2 class="text-center">Dining Preferences Survey</h2>
-        <form action="{{ url_for('survey.survey') }}" method="POST">
+        <form action="{{ url_for('dining_survey.dsurvey') }}" method="POST">
             <div class="mb-3">
                 <label for="question1" class="form-label">What type of cuisine do you enjoy the most?</label>
                 <select class="form-select" id="question1" name="question1" required>

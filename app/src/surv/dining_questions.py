@@ -1,15 +1,15 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_login import current_user, login_required
-from app.src.db.survey import Survey
+from app.src.db.dining_survey import DiningSurvey
 from app.src.db.init import db
 
-survey_bp = Blueprint('survey', __name__)
+dining_survey_bp = Blueprint('dining_survey', __name__)
 
-@survey_bp.route('/survey', methods=['GET', 'POST'])
+@dining_survey_bp.route('/dining_survey', methods=['GET', 'POST'])
 @login_required
-def survey():
+def dsurvey():
     if request.method == 'POST':
-        responses = Survey(
+        responses = DiningSurvey(
             user_id=current_user.id,
             question1=request.form['question1'],
             question2=request.form['question2'],
@@ -28,4 +28,4 @@ def survey():
         flash('Survey submitted successfully!', 'success')
         return redirect(url_for('home'))
 
-    return render_template('survey.html')
+    return render_template('dining_survey.html')

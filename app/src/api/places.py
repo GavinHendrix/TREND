@@ -3,7 +3,7 @@ import os
 from dotenv import load_dotenv
 from pathlib import Path
 from flask import Blueprint, request, jsonify, flash
-from app.src.db.survey import Survey
+from app.src.db.dining_survey import DiningSurvey
 
 places_bp = Blueprint('places_bp', __name__)
 
@@ -20,7 +20,7 @@ def get_nearby_places():
     location = request.args.get('location')  # Format: 'lat,lng'
     place_type = request.args.get('type') # 'restaurant'
 
-    survey_response = Survey.query.filter_by(user_id=user_id).first()
+    survey_response = DiningSurvey.query.filter_by(user_id=user_id).first()
     if not survey_response:
         flash('Survey Error', 'danger')
 
