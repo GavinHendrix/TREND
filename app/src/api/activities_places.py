@@ -13,7 +13,7 @@ GOOGLE_API_KEY = os.getenv('GOOGLE_API_KEY')
 
 PLACES_URL = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json'
 
-@activities_places_bp.route('/activites_places', methods=['GET'])
+@activities_places_bp.route('/activities_places', methods=['GET'])
 def get_nearby_places():
     user_id = int(request.args.get('user_id'))
     type = "bowling_alley"
