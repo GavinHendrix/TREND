@@ -25,11 +25,11 @@ jobs:
     - name: Build Binary Executable
       run: make build
     
-    - name: Upload Executable
-      uses: actions/upload-artifact@v4
-      with:
-        name: TREND
-        path: dist/ 
+    # - name: Upload Executable
+    #   uses: actions/upload-artifact@v4
+    #   with:
+    #     name: TREND
+    #     path: dist/ 
 
     #- name: Run Tests
       #run: make test

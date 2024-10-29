@@ -2,7 +2,7 @@ VENV := venv
 PYTHON := python3.12
 APP_NAME := TREND
 SRC := run.py
-VERSION := 0.5.0
+VERSION ?= latest
 
 all: check-python install build
 
@@ -26,21 +26,21 @@ install: $(VENV)/bin/activate
 
 build: $(SRC)
 	. $(VENV)/bin/activate && $(VENV)/bin/pyinstaller --onefile \
-	--name $(APP_NAME)_v$(VERSION) \
+	--name $(APP_NAME)_$(VERSION) \
 	--add-data "app/templates:app/templates" \
 	--add-data "app/static:app/static" \
 	$(SRC)
 
 build-docker: $(SRC)
 	pyinstaller --onefile \
-	--name $(APP_NAME)_v$(VERSION) \
+	--name $(APP_NAME)_$(VERSION) \
 	--add-data "app/templates:app/templates" \
 	--add-data "app/static:app/static" \
 	$(SRC)
 
 run:
 	@echo "-> Running Flask App"
-	. $(VENV)/bin/activate && ./dist/$(APP_NAME)_v$(VERSION)
+	. $(VENV)/bin/activate && ./dist/$(APP_NAME)_$(VERSION)
 
 clean:
 	@echo "-> Removing Virtual Environment"
@@ -48,7 +48,7 @@ clean:
 
 clean-build:
 	@echo "-> Removing Build"
-	rm -rf build dist instance $(APP_NAME)_v$(VERSION).spec
+	rm -rf build dist instance $(APP_NAME)_$(VERSION).spec
 
 test: $(VENV)/bin/activate
 	@echo "-> Running Tests"

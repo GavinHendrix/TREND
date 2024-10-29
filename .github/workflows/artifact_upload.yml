@@ -1,0 +1,36 @@
+name: Build and Upload Artifact
+
+on:
+  push:
+    tags:
+      - 'v*'  # Trigger on tags prefixed with 'v' for versioning (e.g., v1.0.0)
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.12'
+
+      - name: Install Dependencies
+        run: |
+          make install
+
+      - name: Build Executable with PyInstaller
+        run: |
+          make build VERSION="${{ github.ref_name }}"
+        env:
+          VERSION: ${{ github.ref_name }}
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: "TREND_${{ github.ref_name }}"
+          path: dist/TREND_${{ github.ref_name }}
