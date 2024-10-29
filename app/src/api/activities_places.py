@@ -16,7 +16,7 @@ PLACES_URL = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json'
 @activities_places_bp.route('/activities_places', methods=['GET'])
 def get_nearby_places():
     user_id = int(request.args.get('user_id'))
-    type = "bowling_alley"
+    type = "art_gallery"  #night_club art_gallery bowling_alley
     location = request.args.get('location')  # Format: 'lat,lng'
     params = {
         'location': location,
@@ -26,7 +26,7 @@ def get_nearby_places():
         #'keyword': keyword_query,
         #'minprice': minprice,
         #'maxprice': maxprice,
-        'opening_hours': {'open_now': True}
+        #'opening_hours': {'open_now': True}
     }
     response = requests.get(PLACES_URL, params=params)
     data = response.json()
