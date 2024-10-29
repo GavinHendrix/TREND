@@ -12,7 +12,7 @@
             const longitude = position.coords.longitude;
 
             // Now you make the API call to your backend to get nearby places
-            fetch(`/api/places?location=${latitude},${longitude}&user_id=${userId}`)
+            fetch(`/api/activities_places?location=${latitude},${longitude}&user_id=${userId}`)
                 .then(response => response.json())
                 .then(data => {
                     // Remove the loading message

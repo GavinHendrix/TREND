@@ -13,7 +13,7 @@
             const userId = "{{ current_user.id }}";
 
             // Now you make the API call to your backend to get nearby places
-            fetch(`/api/places?location=${latitude},${longitude}&user_id=${userId}&type=restaurant`)
+            fetch(`/api/dining_places?location=${latitude},${longitude}&user_id=${userId}&type=restaurant`)
                 .then(response => {
                     if (!response.ok) {
                         return response.json().then(errorData => {

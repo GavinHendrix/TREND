@@ -14,7 +14,7 @@ GOOGLE_API_KEY = os.getenv('GOOGLE_API_KEY')
 
 PLACES_URL = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json'
 
-@dining_places_bp.route('/places', methods=['GET'])
+@dining_places_bp.route('/dining_places', methods=['GET'])
 def get_nearby_places():
     user_id = int(request.args.get('user_id'))
     location = request.args.get('location')  # Format: 'lat,lng'
