@@ -2,7 +2,9 @@ from flask import Flask, render_template
 from flask_login import LoginManager
 from app.src.db.init import db
 from app.src.db.user import User
+from app.src.db.survey_pref import SurveyPreference
 from app.src.db.dining_survey import DiningSurvey
+from app.src.db.activity_survey import ActivitySurvey
 from app.src.config import get_config
 from dotenv import load_dotenv
 
@@ -38,8 +40,11 @@ def create_app(name):
     from app.src.rec.dining import dining_bp
     from app.src.rec.movies import movies_bp
     from app.src.surv.dining_questions import dining_survey_bp
+    from app.src.surv.activity_questions import activity_survey_bp
+    from app.src.surv.movie_questions import movie_survey_bp
     from app.src.api.dining_places import dining_places_bp
     from app.src.api.activities_places import activities_places_bp
+    from app.src.rec.preferences import survey_preference_bp
     from app.src.api.openai import openai_bp
 
     app.register_blueprint(login_bp)
@@ -50,8 +55,11 @@ def create_app(name):
     app.register_blueprint(dining_bp)
     app.register_blueprint(movies_bp)
     app.register_blueprint(dining_survey_bp)
+    app.register_blueprint(activity_survey_bp)
+    app.register_blueprint(movie_survey_bp)
     app.register_blueprint(dining_places_bp, url_prefix='/api')
     app.register_blueprint(activities_places_bp, url_prefix='/api')
+    app.register_blueprint(survey_preference_bp)
     app.register_blueprint(openai_bp, url_prefix='/api')
     
     return app

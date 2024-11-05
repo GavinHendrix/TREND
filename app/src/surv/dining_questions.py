@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_login import current_user, login_required
 from app.src.db.dining_survey import DiningSurvey
 from app.src.db.init import db
+from app.src.rec.preferences import redirect_to_next_survey
 
 dining_survey_bp = Blueprint('dining_survey', __name__)
 
@@ -26,6 +27,7 @@ def dsurvey():
         db.session.commit()
 
         flash('Survey submitted successfully!', 'success')
-        return redirect(url_for('home'))
+        # return redirect(url_for('home'))
+        return redirect_to_next_survey()
 
     return render_template('dining_survey.html')
