@@ -5,6 +5,7 @@ from app.src.db.user import User
 from app.src.db.dining_survey import DiningSurvey
 from app.src.config import get_config
 from dotenv import load_dotenv
+import os
 
 load_dotenv()
 
@@ -13,6 +14,7 @@ def create_app(name):
     app.static_folder = 'app/static'
 
     app.config.from_object(get_config())
+    app.config['GOOGLE_MAPS_API_KEY'] = os.getenv('GOOGLE_MAPS_API_KEY')
 
     db.init_app(app)
     login_manager = LoginManager()
