@@ -15,3 +15,28 @@ This project is designed to help eliminate the prevalent and rising problem of i
 
 ## Getting Started with TREND
 ### Project File Structure
+TREND 
+├── README.md 
+├── USER_MANUAL.md 
+├── app 
+│   ├── __init__.py 
+│   ├── src 
+│   │   ├── api 
+│   │   │   └── __init__.py 
+│   │   └── auth 
+│   │       └── __init__.py 
+│   ├── static 
+│   │   ├── css 
+│   │   │   └── styles.css 
+│   │   ├── js 
+│   │   │   └── app.js 
+│   │   └── media 
+│   └── templates 
+│       ├── auth 
+│       │   └── login.html 
+│       └── base.html 
+├── config.py 
+├── requirements.txt 
+├── run.py 
+└── tests 
+└── __init__.py
