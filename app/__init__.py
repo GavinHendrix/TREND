@@ -1,3 +1,4 @@
+from app.src.api.dining_places import GOOGLE_API_KEY
 from flask import Flask, render_template
 from flask_login import LoginManager
 from app.src.db.init import db
@@ -7,16 +8,18 @@ from app.src.db.dining_survey import DiningSurvey
 from app.src.db.activity_survey import ActivitySurvey
 from app.src.config import get_config
 from dotenv import load_dotenv
+from pathlib import Path
 import os
 
-load_dotenv()
+env_path = Path(__file__).resolve().parent.parent / '.env'
+load_dotenv(dotenv_path=env_path)
 
 def create_app(name):
     app = Flask(name, template_folder='app/templates')
     app.static_folder = 'app/static'
 
     app.config.from_object(get_config())
-    app.config['GOOGLE_MAPS_API_KEY'] = os.getenv('GOOGLE_MAPS_API_KEY')
+    app.config['GOOGLE_MAPS_API_KEY'] = os.getenv('GOOGLE_API_KEY')
 
     db.init_app(app)
     login_manager = LoginManager()
