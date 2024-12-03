@@ -15,6 +15,9 @@ PLACES_URL = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json'
 
 @activities_places_bp.route('/activities_places', methods=['GET'])
 def get_nearby_places():
+    if request.args.get('user_id') == '':
+        return jsonify({'error': 'It looks like you don\'t have an account yet. Please create one to continue!'}), 404
+    
     user_id = int(request.args.get('user_id'))
     type = "art_gallery"  #night_club art_gallery bowling_alley
     location = request.args.get('location')  # Format: 'lat,lng'

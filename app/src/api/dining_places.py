@@ -16,6 +16,9 @@ PLACES_URL = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json'
 
 @dining_places_bp.route('/dining_places', methods=['GET'])
 def get_nearby_places():
+    if request.args.get('user_id') == '':
+        return jsonify({'error': 'It looks like you don\'t have an account yet. Please create one to continue!'}), 404
+
     user_id = int(request.args.get('user_id'))
     location = request.args.get('location')  # Format: 'lat,lng'
     place_type = request.args.get('type') # 'restaurant'
@@ -52,8 +55,6 @@ def get_nearby_places():
 
     if survey_response.question7 and survey_response.question7 != "No Preference":
         keywords.append(survey_response.question7)
-    
-    # question 8?
 
     if survey_response.question8 and int(survey_response.question8) >= 7:
         keywords.append('sustainable')
