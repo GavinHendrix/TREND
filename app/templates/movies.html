@@ -3,7 +3,17 @@
 {% block content %}
 <h2>Movies Recommendations</h2>
 <p>Here are some great movie recommendations!</p>
-<div id="movie-list"></div>
+<div id="movie-carousel" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner" id="movie-list"></div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#movie-carousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#movie-carousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
 
 <script>
     async function fetchMovies() {
@@ -15,24 +25,63 @@
             movieList.innerHTML = '';
 
             if (data.results?.length > 0) {
-                data.results.forEach(movie => {
+                data.results.forEach((movie, index) => {
+                    const isActive = index === 0 ? 'active' : '';
                     movieList.innerHTML += `
-                        <div class="movie-card">
-                            <h3>${movie.title}</h3>
-                            <p>${movie.overview}</p>
-                            <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" 
-                                 alt="${movie.title} poster" />
+                        <div class="carousel-item ${isActive}">
+                            <div class="text-center">
+                                <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" 
+                                     alt="${movie.title} poster" class="d-block mx-auto" style="max-height: 500px;" />
+                                <div class="carousel-caption d-none d-md-block">
+                                    <h5>${movie.title}</h5>
+                                    <p>${movie.overview}</p>
+                                </div>
+                            </div>
                         </div>`;
                 });
             } else {
-                movieList.innerHTML = '<p>No movies found</p>';
+                movieList.innerHTML = '<p class="text-center">No movies found</p>';
             }
         } catch (error) {
             console.error('Error fetching movies:', error);
-            document.getElementById('movie-list').innerHTML = '<p>Error loading movies</p>';
+            document.getElementById('movie-list').innerHTML = '<p class="text-center">Error loading movies</p>';
         }
     }
 
     window.onload = fetchMovies;
 </script>
+<style>
+    .carousel-control-prev-icon, 
+    .carousel-control-next-icon {
+        background-color: #000;  /* Change to black to contrast the white */
+        border-radius: 50%;
+    }
+
+    .carousel-control-prev, 
+    .carousel-control-next {
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .carousel-control-prev:hover, 
+    .carousel-control-next:hover {
+        background-color: rgba(0, 0, 0, 0.7);
+    }
+    .movie-poster {
+        max-height: 500px;
+        width: auto;
+        object-fit: cover;
+    }
+
+    .carousel-caption {
+        background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background for text */
+        padding: 10px;
+        border-radius: 5px;
+    }
+
+    .movie-description {
+        white-space: normal; /* Allow text to wrap */
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+</style>
 {% endblock %}
