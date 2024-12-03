@@ -1,19 +1,106 @@
+<!DOCTYPE html>
 {% extends 'base.html' %}
 {% block title %}TREND - Dining{% endblock %}
 {% block content %}
 <h2>Dining Recommendations</h2>
 <p id="loadingMessage">Finding great places to eat near you...</p>
-<div id="placesList"></div>
-
+<div style="margin-bottom: 20px;">
+    <label for="sortOptions" style="font-size: 1rem; margin-right: 10px;">Sort By: </label>
+    <select id="sortOptions" style="padding: 5px 10px; border-radius: 5px; border: 1px solid #ccc; font-size: 1rem;">
+        <option value="distance">Distance</option>
+        <option value="rating">Rating</option>
+    </select>
+    <button id="sortButton" style="
+        padding: 8px 16px;
+        margin-left: 10px;
+        border: none;
+        border-radius: 20px;
+        background-color: #007BFF;
+        color: white;
+        font-size: 1rem;
+        cursor: pointer;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: background-color 0.3s, box-shadow 0.3s;
+    ">Sort</button>
+</div>
+<div id="carouselContainer" style="display: flex; overflow-x: scroll; gap: 20px; padding: 10px;"></div>
 <script>
-    if(navigator.geolocation) {
+    if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function (position) {
-            const latitude = position.coords.latitude;
-            const longitude = position.coords.longitude;
+            const userLatitude = position.coords.latitude;
+            const userLongitude = position.coords.longitude;
             const userId = "{{ current_user.id }}";
+            let diningPlaces = [];
 
-            // Now you make the API call to your backend to get nearby places
-            fetch(`/api/places?location=${latitude},${longitude}&user_id=${userId}&type=restaurant`)
+            // Function to calculate distance using the Haversine formula
+            function calculateDistance(lat1, lon1, lat2, lon2) {
+                const toRadians = deg => (deg * Math.PI) / 180;
+                const R = 3958.8; // Radius of the Earth in miles
+                const dLat = toRadians(lat2 - lat1);
+                const dLon = toRadians(lon2 - lon1);
+                const a =
+                    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                    Math.cos(toRadians(lat1)) *
+                        Math.cos(toRadians(lat2)) *
+                        Math.sin(dLon / 2) *
+                        Math.sin(dLon / 2);
+                const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+                return R * c; // Distance in miles
+            }
+
+            // Function to render dining cards
+            function renderCards(places) {
+                const carouselContainer = document.getElementById('carouselContainer');
+                carouselContainer.innerHTML = ''; // Clear existing cards
+                places.forEach(place => {
+                    const card = document.createElement('div');
+                    card.style.width = '300px';
+                    card.style.border = '1px solid #ccc';
+                    card.style.borderRadius = '10px';
+                    card.style.overflow = 'hidden';
+                    card.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
+                    card.style.flexShrink = '0';
+
+                    // Create the image section
+                    const image = document.createElement('div');
+                    image.style.height = '150px';
+                    image.style.backgroundImage = `url(${place.photos?.[0]?.url || 'https://via.placeholder.com/300x150'})`;
+                    image.style.backgroundSize = 'cover';
+                    image.style.backgroundPosition = 'center';
+
+                    // Create the content section
+                    const content = document.createElement('div');
+                    content.style.padding = '10px';
+
+                    const name = document.createElement('h3');
+                    name.textContent = place.name;
+                    name.style.margin = '0 0 10px 0';
+                    name.style.fontSize = '1.2rem';
+
+                    const distanceText = document.createElement('p');
+                    distanceText.textContent = `Distance: ${place.distance.toFixed(2)} miles`;
+                    distanceText.style.margin = '0 0 5px 0';
+                    distanceText.style.color = '#555';
+
+                    const rating = document.createElement('p');
+                    rating.textContent = `Rating: ${place.rating || 'N/A'}`;
+                    rating.style.margin = '0';
+                    rating.style.color = '#888';
+
+                    // Append elements to card
+                    content.appendChild(name);
+                    content.appendChild(distanceText);
+                    content.appendChild(rating);
+                    card.appendChild(image);
+                    card.appendChild(content);
+
+                    // Append card to carousel
+                    carouselContainer.appendChild(card);
+                });
+            }
+
+            // API call to get nearby dining places
+            fetch(`/api/dining_places?location=${userLatitude},${userLongitude}&user_id=${userId}&type=restaurant`)
                 .then(response => {
                     if (!response.ok) {
                         return response.json().then(errorData => {
@@ -25,23 +112,46 @@
                 .then(data => {
                     // Remove the loading message
                     document.getElementById('loadingMessage').style.display = 'none';
-                    
-                    // Process and display the results
-                    const placesList = document.getElementById('placesList');
-                    if (data.results.length === 0) {
-                        placesList.textContent = 'No places found near your location.';
-                    } else {
-                        data.results.forEach(place => {
-                            const placeElement = document.createElement('p');
-                            placeElement.textContent = place.name;
-                            placesList.appendChild(placeElement);
-                        });
-                    }
+
+                    diningPlaces = data.results.map(place => ({
+                        ...place,
+                        distance: calculateDistance(
+                            userLatitude,
+                            userLongitude,
+                            place.geometry.location.lat,
+                            place.geometry.location.lng
+                        ),
+                    }));
+
+                    // Initial render
+                    renderCards(diningPlaces);
                 })
                 .catch(error => {
                     console.error('Error fetching places:', error);
                     document.getElementById('loadingMessage').textContent = error.message;
                 });
+
+            // Sorting logic
+            document.getElementById('sortButton').addEventListener('click', () => {
+                const sortOption = document.getElementById('sortOptions').value;
+                if (sortOption === 'distance') {
+                    diningPlaces.sort((a, b) => a.distance - b.distance);
+                } else if (sortOption === 'rating') {
+                    diningPlaces.sort((a, b) => (b.rating || 0) - (a.rating || 0));
+                }
+                renderCards(diningPlaces);
+            });
+
+            // Add hover effect for the button
+            const sortButton = document.getElementById('sortButton');
+            sortButton.addEventListener('mouseenter', () => {
+                sortButton.style.backgroundColor = '#0056b3';
+                sortButton.style.boxShadow = '0 6px 8px rgba(0, 0, 0, 0.15)';
+            });
+            sortButton.addEventListener('mouseleave', () => {
+                sortButton.style.backgroundColor = '#007BFF';
+                sortButton.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
+            });
         });
     } else {
         alert('Geolocation is not supported by this browser.');

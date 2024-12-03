@@ -1,3 +1,4 @@
+from platform import release
 import requests
 import os
 from dotenv import load_dotenv
@@ -19,7 +20,10 @@ def get_movies_by_criteria():
     params = {
         'api_key': TMDB_API_KEY,
         'language': 'en-US',
-        'with_genres': '28' #include genres 28 - action, 35 - comedy //multiple genres can be included by using a comma
+        'with_genres': '28',
+        'include_adult': 'false',
+        'release_date.gte': '2020-01-01'
+          #include genres 28 - action, 35 - comedy //multiple genres can be included by using a comma
         # could add 'without_genres': , 'release_date.gte': , 'include_adult': , 'with_runtime.lte': 
     }
 

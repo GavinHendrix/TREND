@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+{% block title %}ActivitySurvey{% endblock %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activity Preferences Survey</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="text-center">Activity Preferences Survey</h2>
+        <form action="{{ url_for('activity_survey.asurvey') }}" method="POST">
+            <div class="mb-3">
+                <label for="question1" class="form-label">What type of activities are you interested in?</label>
+                <select class="form-select" id="question1" name="question1" multiple required>
+                    <option value="Arts and Culture">Arts and Culture</option>
+                    <option value="Outdoor and Nature">Outdoor and Nature</option>
+                    <option value="Music and Entertainment">Music and Entertainment</option>
+                    <option value="Shopping">Shopping</option>
+                    <option value="Fitness and Sports">Fitness and Sports</option>
+                    <option value="Animal Encounters">Animal Encounters</option>
+                    <option value="Games and Challenges">Games and Challenges</option>
+                    <option value="Adventure and Thrills">Adventure and Thrills</option>
+                    <option value="Quiet Spaces">Quiet or Reflective Spaces</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="question2" class="form-label">How far are you willing to travel?</label>
+                <input type="range" class="form-range" id="question2" name="question2" min="0" max="50" step="1" required>
+                <small>0 kilometers - 50+ kilometers</small>
+            </div>
+            <div class="mb-3">
+                <label for="question3" class="form-label">What is your budget for the activity?</label>
+                <select class="form-select" id="question3" name="question3" required>
+                    <option value="Low">Low (Free to $10)</option>
+                    <option value="Medium">Medium ($10 - $50)</option>
+                    <option value="High">High ($50+)</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="question4" class="form-label">What is your preferred time of day for activities?</label>
+                <select class="form-select" id="question4" name="question4" required>
+                    <option value="Morning">Morning</option>
+                    <option value="Afternoon">Afternoon</option>
+                    <option value="Evening">Evening</option>
+                    <option value="Night">Night</option>
+                    <option value="Anytime">Anytime</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="question5" class="form-label">Do you prefer indoor or outdoor activities?</label>
+                <select class="form-select" id="question5" name="question5" required>
+                    <option value="Indoor">Indoor</option>
+                    <option value="Outdoor">Outdoor</option>
+                    <option value="Both">Both</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="question6" class="form-label">Do you want to include activities suitable for families or children?</label>
+                <select class="form-select" id="question6" name="question6" required>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="question7" class="form-label">What is your primary goal for this activity?</label>
+                <select class="form-select" id="question7" name="question7" required>
+                    <option value="Relaxation">Relaxation</option>
+                    <option value="Fun">Fun and Entertainment</option>
+                    <option value="Learning">Learning and Growth</option>
+                    <option value="Fitness">Physical Fitness</option>
+                    <option value="Socializing">Socializing</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="question8" class="form-label">What type of group size do you prefer for activities?</label>
+                <select class="form-select" id="question8" name="question8" required>
+                    <option value="Solo">Solo</option>
+                    <option value="Small Group">Small Groups (2-4 people)</option>
+                    <option value="Medium Group">Small Groups (5-10 people)</option>
+                    <option value="Large Group">Large Groups (10+ people)</option>
+                    <option value="None">No preference</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="question9" class="form-label">Do you have specific activity-related preferences to consider?</label>
+                <select class="form-select" id="question9" name="question9" required>
+                    <option value="Wheelchair">Wheelchair accessibility</option>
+                    <option value="Pet-Friendly">Pet-friendly</option>
+                    <option value="Quiet">Quiet spaces</option>
+                    <option value="Low Sensory">Low sensory stimulation</option>
+                    <option value="None">No specific requirements</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="question10" class="form-label">Would you like to prioritize recommendations based on ratings or popularity?</label>
+                <select class="form-select" id="question10" name="question10" required>
+                    <option value="Ratings">High Ratings</option>
+                    <option value="Popularity">Popular Places</option>
+                    <option value="No Preference">No Preference</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit Survey</button>
+        </form>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+{% endblock %}
