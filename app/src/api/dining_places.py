@@ -3,9 +3,10 @@ import os
 from dotenv import load_dotenv
 from pathlib import Path
 from flask import Blueprint, request, jsonify, flash
-from app.src.db.survey import Survey
+from app.src.db.dining_survey import DiningSurvey
+import random
 
-places_bp = Blueprint('places_bp', __name__)
+dining_places_bp = Blueprint('dining_places_bp', __name__)
 
 # Get Path for .env File and Load
 env_path = Path(__file__).resolve().parent.parent.parent.parent / '.env'
@@ -14,19 +15,24 @@ GOOGLE_API_KEY = os.getenv('GOOGLE_API_KEY')
 
 PLACES_URL = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json'
 
-@places_bp.route('/places', methods=['GET'])
+@dining_places_bp.route('/dining_places', methods=['GET'])
 def get_nearby_places():
+    if request.args.get('user_id') == '':
+        return jsonify({'error': 'It looks like you don\'t have an account yet. Please create one to continue!'}), 404
+
     user_id = int(request.args.get('user_id'))
     location = request.args.get('location')  # Format: 'lat,lng'
     place_type = request.args.get('type') # 'restaurant'
 
-    survey_response = Survey.query.filter_by(user_id=user_id).first()
+    survey_response = DiningSurvey.query.filter_by(user_id=user_id).first()
     if not survey_response:
         flash('Survey Error', 'danger')
 
+    cuisine_options = ["American", "Italian", "Mexican", "Indian", "Chinese", "Mediterranean", "Japanese"]
     keywords = []
-    if survey_response.question1:
+    if survey_response.question1 and survey_response.question1 != "Other":
         keywords.append(survey_response.question1)
+        cuisine_options.remove(survey_response.question1)
 
     radius_m = 5000 # default value (5m)
     if survey_response.question2:
@@ -52,10 +58,14 @@ def get_nearby_places():
 
     if survey_response.question7 and survey_response.question7 != "No Preference":
         keywords.append(survey_response.question7)
-    
-    # question 8?
 
     if survey_response.question8 and int(survey_response.question8) >= 7:
+        keywords.append(random.choice(cuisine_options))
+
+    if survey_response.question9 and survey_response.question9 != "No Preference":
+        keywords.append(survey_response.question9)
+
+    if survey_response.question10 and int(survey_response.question10) >= 7:
         keywords.append('sustainable')
         keywords.append('locally-sourced')
 

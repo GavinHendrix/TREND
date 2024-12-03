@@ -1,18 +1,25 @@
+from app.src.api.dining_places import GOOGLE_API_KEY
 from flask import Flask, render_template
 from flask_login import LoginManager
 from app.src.db.init import db
 from app.src.db.user import User
-from app.src.db.survey import Survey
+from app.src.db.survey_pref import SurveyPreference
+from app.src.db.dining_survey import DiningSurvey
+from app.src.db.activity_survey import ActivitySurvey
 from app.src.config import get_config
 from dotenv import load_dotenv
+from pathlib import Path
+import os
 
-load_dotenv()
+env_path = Path(__file__).resolve().parent.parent / '.env'
+load_dotenv(dotenv_path=env_path)
 
 def create_app(name):
     app = Flask(name, template_folder='app/templates')
     app.static_folder = 'app/static'
 
     app.config.from_object(get_config())
+    app.config['GOOGLE_MAPS_API_KEY'] = os.getenv('GOOGLE_API_KEY')
 
     db.init_app(app)
     login_manager = LoginManager()
@@ -37,8 +44,12 @@ def create_app(name):
     from app.src.rec.activities import activities_bp
     from app.src.rec.dining import dining_bp
     from app.src.rec.movies import movies_bp
-    from app.src.surv.questions import survey_bp
-    from app.src.api.places import places_bp
+    from app.src.surv.dining_questions import dining_survey_bp
+    from app.src.surv.activity_questions import activity_survey_bp
+    from app.src.surv.movie_questions import movie_survey_bp
+    from app.src.api.dining_places import dining_places_bp
+    from app.src.api.activities_places import activities_places_bp
+    from app.src.rec.preferences import survey_preference_bp
     from app.src.api.openai import openai_bp
     from app.src.api.tmdb import tmdb_bp
 
@@ -49,8 +60,12 @@ def create_app(name):
     app.register_blueprint(activities_bp)
     app.register_blueprint(dining_bp)
     app.register_blueprint(movies_bp)
-    app.register_blueprint(survey_bp)
-    app.register_blueprint(places_bp, url_prefix='/api')
+    app.register_blueprint(dining_survey_bp)
+    app.register_blueprint(activity_survey_bp)
+    app.register_blueprint(movie_survey_bp)
+    app.register_blueprint(dining_places_bp, url_prefix='/api')
+    app.register_blueprint(activities_places_bp, url_prefix='/api')
+    app.register_blueprint(survey_preference_bp)
     app.register_blueprint(openai_bp, url_prefix='/api')
     app.register_blueprint(tmdb_bp, url_prefix='/api')
     
