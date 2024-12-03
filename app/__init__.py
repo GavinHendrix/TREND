@@ -40,6 +40,7 @@ def create_app(name):
     from app.src.surv.questions import survey_bp
     from app.src.api.places import places_bp
     from app.src.api.openai import openai_bp
+    from app.src.api.tmdb import tmdb_bp
 
     app.register_blueprint(login_bp)
     app.register_blueprint(register_bp)
@@ -51,5 +52,6 @@ def create_app(name):
     app.register_blueprint(survey_bp)
     app.register_blueprint(places_bp, url_prefix='/api')
     app.register_blueprint(openai_bp, url_prefix='/api')
+    app.register_blueprint(tmdb_bp, url_prefix='/api')
     
     return app
