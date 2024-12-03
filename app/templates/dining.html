@@ -48,6 +48,27 @@
                 return R * c; // Distance in miles
             }
 
+            // Function to handle disliking a place
+            async function dislikePlace(placeName, cardElement) {
+                try {
+                    const response = await fetch('/api/dislike_dining', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ user_id: userId, user_dislike: placeName }),
+                    });
+
+                    if (!response.ok) {
+                        const errorData = await response.json();
+                        throw new Error(errorData.error);
+                    }
+
+                    // Remove the card from the carousel
+                    cardElement.remove();
+                } catch (error) {
+                    console.error('Error disliking place:', error);
+                }
+            }
+
             // Function to render dining cards
             function renderCards(places) {
                 const carouselContainer = document.getElementById('carouselContainer');
@@ -87,10 +108,26 @@
                     rating.style.margin = '0';
                     rating.style.color = '#888';
 
+                    // Create the dislike button
+                    const dislikeButton = document.createElement('button');
+                    dislikeButton.innerHTML = `Dislike`;
+                    dislikeButton.style.padding = '8px 16px';
+                    dislikeButton.style.border = 'none';
+                    dislikeButton.style.borderRadius = '20px';
+                    dislikeButton.style.backgroundColor = '#FF4C4C';
+                    dislikeButton.style.color = 'white';
+                    dislikeButton.style.fontSize = '0.9rem';
+                    dislikeButton.style.cursor = 'pointer';
+                    dislikeButton.style.marginTop = '10px';
+                    dislikeButton.style.display = 'block';
+                    dislikeButton.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
+                    dislikeButton.addEventListener('click', () => dislikePlace(place.name, card));
+
                     // Append elements to card
                     content.appendChild(name);
                     content.appendChild(distanceText);
                     content.appendChild(rating);
+                    content.appendChild(dislikeButton);
                     card.appendChild(image);
                     card.appendChild(content);
 
@@ -130,28 +167,6 @@
                     console.error('Error fetching places:', error);
                     document.getElementById('loadingMessage').textContent = error.message;
                 });
-
-            // Sorting logic
-            document.getElementById('sortButton').addEventListener('click', () => {
-                const sortOption = document.getElementById('sortOptions').value;
-                if (sortOption === 'distance') {
-                    diningPlaces.sort((a, b) => a.distance - b.distance);
-                } else if (sortOption === 'rating') {
-                    diningPlaces.sort((a, b) => (b.rating || 0) - (a.rating || 0));
-                }
-                renderCards(diningPlaces);
-            });
-
-            // Add hover effect for the button
-            const sortButton = document.getElementById('sortButton');
-            sortButton.addEventListener('mouseenter', () => {
-                sortButton.style.backgroundColor = '#0056b3';
-                sortButton.style.boxShadow = '0 6px 8px rgba(0, 0, 0, 0.15)';
-            });
-            sortButton.addEventListener('mouseleave', () => {
-                sortButton.style.backgroundColor = '#007BFF';
-                sortButton.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
-            });
         });
     } else {
         alert('Geolocation is not supported by this browser.');

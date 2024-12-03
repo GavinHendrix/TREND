@@ -50,8 +50,9 @@ def create_app(name):
     from app.src.api.dining_places import dining_places_bp
     from app.src.api.activities_places import activities_places_bp
     from app.src.rec.preferences import survey_preference_bp
-    from app.src.api.openai import openai_bp
+    # from app.src.api.openai import openai_bp
     from app.src.api.tmdb import tmdb_bp
+    from app.src.api.dislike_dining import dislike_dining_bp
 
     app.register_blueprint(login_bp)
     app.register_blueprint(register_bp)
@@ -64,9 +65,10 @@ def create_app(name):
     app.register_blueprint(activity_survey_bp)
     app.register_blueprint(movie_survey_bp)
     app.register_blueprint(dining_places_bp, url_prefix='/api')
+    app.register_blueprint(dislike_dining_bp, url_prefix='/api')
     app.register_blueprint(activities_places_bp, url_prefix='/api')
     app.register_blueprint(survey_preference_bp)
-    app.register_blueprint(openai_bp, url_prefix='/api')
+    # app.register_blueprint(openai_bp, url_prefix='/api')
     app.register_blueprint(tmdb_bp, url_prefix='/api')
     
     return app
