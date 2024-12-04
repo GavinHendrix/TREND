@@ -16,15 +16,15 @@ GOOGLE_API_KEY = os.getenv('GOOGLE_API_KEY')
 PLACES_URL = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json'
 
 ACTIVITY_MAPPING = {
-    "Arts and Culture": {"type": ["art_gallery", "museum"], "keywords": ["art", "culture", "historical sites"]},
-    "Outdoor and Nature": {"type": ["park", "natural_feature"], "keywords": ["nature", "hiking", "gardens"]},
-    "Music and Entertainment": {"type": ["movie_theater", "night_club"], "keywords": ["live music", "concerts"]},
-    "Shopping": {"type": ["shopping_mall", "store"], "keywords": ["retail", "boutiques", "markets"]},
-    "Fitness and Sports": {"type": ["gym", "stadium"], "keywords": ["fitness", "sports center", "yoga"]},
-    "Animal Encounters": {"type": ["zoo", "pet_store"], "keywords": ["wildlife", "aquarium"]},
-    "Games and Challenges": {"type": ["amusement_park", "escape_room"], "keywords": ["arcade", "gaming"]},
-    "Adventure and Thrills": {"type": ["amusement_park"], "keywords": ["roller coaster", "extreme sports"]},
-    "Quiet Spaces": {"type": ["library", "park"], "keywords": ["meditation", "relaxation"]}
+    "Arts and Culture": {"keywords": ["art_gallery", "museum", "art", "culture", "historical sites"]},
+    "Outdoor and Nature": {"keywords": ["park", "nature", "hiking", "gardens"]},
+    "Music and Entertainment": {"keywords": ["movie_theatre", "night_club", "live music", "concerts"]},
+    "Shopping": {"keywords": ["shopping_mall", "store", "retail", "boutiques", "markets"]},
+    "Fitness and Sports": {"keywords": ["gym", "stadium", "fitness", "sports center", "yoga"]},
+    "Animal Encounters": {"keywords": ["zoo", "pet store", "wildlife", "aquarium"]},
+    "Games and Challenges": {"keywords": ["amusement_park", "escape_room", "arcade", "gaming"]},
+    "Adventure and Thrills": {"keywords": ["amusement_park", "roller coaster", "extreme sports"]},
+    "Quiet Spaces": {"keywords": ["library", "park", "meditation", "relaxation"]}
 }
 
 @activities_places_bp.route('/activities_places', methods=['GET'])
@@ -40,8 +40,6 @@ def get_nearby_places():
         return jsonify({'error': 'This survey has not been completed.'}), 404
 
     survey_response = ActivitySurvey.query.filter_by(user_id=user_id).first()
-    
-    activity_types = survey_response.question1.split(',')
 
     radius_m = 5000 # default value (5m)
     if survey_response.question2:
@@ -75,57 +73,25 @@ def get_nearby_places():
     if survey_response.question9 and survey_response.question9 != "None":
         keywords.append(survey_response.question9)
 
-    rating_or_popularity = survey_response.question10
+    activity = survey_response.question1
+    activity_details = ACTIVITY_MAPPING.get(activity.strip())
+    
+    # Query using 'keywords'
+    combined_keywords = activity_details["keywords"] + keywords
+    combined_keyword_query = ' '.join(combined_keywords)
+    params = {
+        'location': location,
+        'radius': radius_m,
+        'key': GOOGLE_API_KEY,
+        'keyword': combined_keyword_query,
+        'minprice': minprice,
+        'maxprice': maxprice,
+        'opening_hours': {'open_now': True}
+    }
+    response = requests.get(PLACES_URL, params=params)
+    data = response.json()
+    
+    if data['status'] == 'ZERO_RESULTS':
+        return jsonify({'error': 'No places found near your location'}), 404
 
-    all_results = []
-    for activity in activity_types:
-        activity_details = ACTIVITY_MAPPING.get(activity.strip())
-        if not activity_details:
-            continue
-        
-        # Query using 'type' fields
-        keyword_query = ' '.join(keywords)
-        for place_type in activity_details['type']:
-            params = {
-                'location': location,
-                'radius': radius_m,
-                'type': place_type,
-                'key': GOOGLE_API_KEY,
-                'keyword': keyword_query,
-                'minprice': minprice,
-                'maxprice': maxprice,
-                'opening_hours': {'open_now': True}
-            }
-            response = requests.get(PLACES_URL, params=params)
-            if response.status_code == 200:
-                data = response.json()
-                if data.get('results'):
-                    all_results.extend(data['results'])
-        
-        # Query using 'keywords'
-        combined_keywords = activity_details['keywords'] + keywords
-        combined_keyword_query = ' '.join(combined_keywords)
-        params = {
-            'location': location,
-            'radius': radius_m,
-            'key': GOOGLE_API_KEY,
-            'keyword': combined_keyword_query,
-            'opening_hours': {'open_now': True}
-        }
-        response = requests.get(PLACES_URL, params=params)
-        if response.status_code == 200:
-            data = response.json()
-            if data.get('results'):
-                all_results.extend(data['results'])
-
-    if not all_results:
-        return jsonify({'error': 'No places found for the selected activities'}), 404
-
-    # unique_results = list({place['place_id']: place for place in all_results}.values())
-
-    # if rating_or_popularity == "Ratings":
-    #     unique_results.sort(key=lambda x: x.get('rating', 0), reverse=True)
-    # elif rating_or_popularity == "Popularity":
-    #     unique_results.sort(key=lambda x: x.get('user_ratings_total', 0), reverse=True)
-
-    return jsonify(all_results)
+    return jsonify(data)

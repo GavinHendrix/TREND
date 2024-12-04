@@ -15,7 +15,7 @@
         <form action="{{ url_for('activity_survey.asurvey') }}" method="POST">
             <div class="mb-3">
                 <label for="question1" class="form-label">What type of activities are you interested in?</label>
-                <select class="form-select" id="question1" name="question1" multiple required>
+                <select class="form-select" id="question1" name="question1" required>
                     <option value="Arts and Culture">Arts and Culture</option>
                     <option value="Outdoor and Nature">Outdoor and Nature</option>
                     <option value="Music and Entertainment">Music and Entertainment</option>
@@ -93,14 +93,6 @@
                     <option value="Quiet">Quiet spaces</option>
                     <option value="Low Sensory">Low sensory stimulation</option>
                     <option value="None">No specific requirements</option>
-                </select>
-            </div>
-            <div class="mb-3">
-                <label for="question10" class="form-label">Would you like to prioritize recommendations based on ratings or popularity?</label>
-                <select class="form-select" id="question10" name="question10" required>
-                    <option value="Ratings">High Ratings</option>
-                    <option value="Popularity">Popular Places</option>
-                    <option value="No Preference">No Preference</option>
                 </select>
             </div>
             <button type="submit" class="btn btn-primary">Submit Survey</button>

@@ -12,6 +12,5 @@ class ActivitySurvey(db.Model):
     question7 = db.Column(db.String(255)) 
     question8 = db.Column(db.String(255))  
     question9 = db.Column(db.String(255)) 
-    question10 = db.Column(db.String(255)) 
 
     user = db.relationship('User', backref=db.backref('ActivitySurvey', lazy=True))
