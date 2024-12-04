@@ -94,4 +94,5 @@ def get_nearby_places():
     if data['status'] == 'ZERO_RESULTS':
         return jsonify({'error': 'No places found near your location'}), 404
 
-    return jsonify(data)
+    # return jsonify(data)
+    return jsonify({'results': data.get('results', [])})

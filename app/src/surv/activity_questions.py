@@ -21,7 +21,6 @@ def asurvey():
             question7=request.form['question7'],
             question8=request.form['question8'],
             question9=request.form['question9'],
-            question10=request.form['question10'],
         )
         db.session.add(responses)
         db.session.commit()
