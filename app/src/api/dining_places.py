@@ -28,6 +28,9 @@ def get_nearby_places():
     if not survey_response:
         flash('Survey Error', 'danger')
 
+    # Get disliked restaurant names
+    disliked_places = survey_response.user_dislike.split(',') if survey_response.user_dislike else []
+
     cuisine_options = ["American", "Italian", "Mexican", "Indian", "Chinese", "Mediterranean", "Japanese"]
     keywords = []
     if survey_response.question1 and survey_response.question1 != "Other":
@@ -88,7 +91,16 @@ def get_nearby_places():
     if data['status'] == 'ZERO_RESULTS':
         return jsonify({'error': 'No places found near your location'}), 404
 
-    return jsonify(data)
+    # Filter out disliked places
+    filtered_results = [
+        place for place in data.get('results', [])
+        if place.get('name') not in disliked_places
+    ]
+
+    if not filtered_results:
+        return jsonify({'error': 'No places found after filtering dislikes.'}), 404
+
+    return jsonify({'results': filtered_results})
 
 # call only works if API key is .env
 # Post call filters(Cannot be a param)

@@ -24,6 +24,29 @@
     ">Sort</button>
 </div>
 <div id="carouselContainer" style="display: flex; overflow-x: scroll; gap: 20px; padding: 10px;"></div>
+<div style="text-align: center; margin-top: 20px;">
+    <button id="refreshButton" style="
+        padding: 10px 20px;
+        border: none;
+        border-radius: 20px;
+        background-color: #007BFF;
+        color: white;
+        font-size: 1rem;
+        cursor: pointer;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        margin-right: 10px;
+    ">Refresh Search</button>
+    <button id="resetDislikesButton" style="
+        padding: 10px 20px;
+        border: none;
+        border-radius: 20px;
+        background-color: #007BFF;
+        color: white;
+        font-size: 1rem;
+        cursor: pointer;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    ">Reset Dislikes</button>
+</div>
 <script>
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function (position) {
@@ -135,6 +158,44 @@
                     carouselContainer.appendChild(card);
                 });
             }
+
+            // Sorting logic
+            document.getElementById('sortButton').addEventListener('click', () => {
+                const sortOption = document.getElementById('sortOptions').value;
+                if (sortOption === 'distance') {
+                    diningPlaces.sort((a, b) => a.distance - b.distance);
+                } else if (sortOption === 'rating') {
+                    diningPlaces.sort((a, b) => (b.rating || 0) - (a.rating || 0));
+                }
+                renderCards(diningPlaces); // Re-render sorted cards
+            });
+
+            // Refresh Search button logic
+            document.getElementById('refreshButton').addEventListener('click', () => {
+                location.reload(); // Refresh the page
+            });
+
+            // Reset Dislikes button logic
+            document.getElementById('resetDislikesButton').addEventListener('click', async () => {
+                try {
+                    const response = await fetch('/api/reset_dislikes', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ user_id: "{{ current_user.id }}" }),
+                    });
+
+                    if (!response.ok) {
+                        const errorData = await response.json();
+                        throw new Error(errorData.error);
+                    }
+
+                    alert('Dislikes reset successfully!');
+                    location.reload(); // Refresh the page after reset
+                } catch (error) {
+                    console.error('Error resetting dislikes:', error);
+                    alert('Failed to reset dislikes. Please try again.');
+                }
+            });
 
             // API call to get nearby dining places
             fetch(`/api/dining_places?location=${userLatitude},${userLongitude}&user_id=${userId}&type=restaurant`)
