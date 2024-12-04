@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 from pathlib import Path
 from flask import Blueprint, request, jsonify, flash
 from app.src.db.dining_survey import DiningSurvey
+from app.src.db.survey_pref import SurveyPreference
 import random
 
 dining_places_bp = Blueprint('dining_places_bp', __name__)
@@ -24,9 +25,11 @@ def get_nearby_places():
     location = request.args.get('location')  # Format: 'lat,lng'
     place_type = request.args.get('type') # 'restaurant'
 
+    survey_pref = SurveyPreference.query.filter_by(user_id=user_id).first()
+    if not survey_pref.dining_survey:
+        return jsonify({'error': 'This survey has not been completed.'}), 404
+
     survey_response = DiningSurvey.query.filter_by(user_id=user_id).first()
-    if not survey_response:
-        flash('Survey Error', 'danger')
 
     # Get disliked restaurant names
     disliked_places = survey_response.user_dislike.split(',') if survey_response.user_dislike else []
