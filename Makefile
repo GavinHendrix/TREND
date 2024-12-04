@@ -67,7 +67,7 @@ docker-build:
 
 # Specify version using make docker-run VERSION=1.0.0
 docker-run:
-	docker run -p 5050:5050 --env-file .env trend-flask-app:$(VERSION)
+	docker run -p 8080:8080 --env-file .env trend-flask-app:$(VERSION)
 
 docker-push:
 	docker tag trend-flask-app:$(VERSION) zackkouba/trend:$(VERSION)

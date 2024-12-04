@@ -21,10 +21,7 @@ RUN pip install --upgrade pip && \
     pip install -r requirements.txt
 
 # Set the prot to listen on
-ENV PORT=${PORT:-5050}
-
-# Expose the Flask port
-EXPOSE 5050
+EXPOSE 8080
 
 # Set the entry point to run.py
 CMD ["python", "run.py"]
