@@ -106,9 +106,10 @@
                     card.style.flexShrink = '0';
 
                     // Create the image section
+                    let imageUrl = place.photo_url || 'https://via.placeholder.com/300x150'
                     const image = document.createElement('div');
                     image.style.height = '150px';
-                    image.style.backgroundImage = `url(${place.photos?.[0]?.url || 'https://via.placeholder.com/300x150'})`;
+                    image.style.backgroundImage = `url(${imageUrl})`;
                     image.style.backgroundSize = 'cover';
                     image.style.backgroundPosition = 'center';
 

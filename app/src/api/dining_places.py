@@ -100,7 +100,19 @@ def get_nearby_places():
     if not filtered_results:
         return jsonify({'error': 'No places found after filtering dislikes.'}), 404
 
-    return jsonify({'results': filtered_results})
+    filtered_with_photos = []
+    for place in filtered_results:
+        if 'photos' in place and len(place['photos']) > 0:
+            photo_reference = place['photos'][0]['photo_reference']
+            photo_url = f"https://maps.googleapis.com/maps/api/place/photo?maxwidth=300&photoreference={photo_reference}&key={GOOGLE_API_KEY}"
+        else:
+            photo_url = 'https://via.placeholder.com/300x150'
+
+        place['photo_url'] = photo_url
+        filtered_with_photos.append(place)
+
+    # return jsonify({'results': filtered_results})
+    return jsonify({'results': filtered_with_photos})
 
 # call only works if API key is .env
 # Post call filters(Cannot be a param)
