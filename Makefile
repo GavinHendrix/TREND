@@ -58,6 +58,9 @@ source:
 	@echo "-> Sourcing Virtual Environment"
 	. $(VENV)/bin/activate
 
+
+# Only important below here
+
 # Specify version using make docker-build VERSION=1.0.0
 docker-build:
 	docker build -t trend-flask-app:$(VERSION) .

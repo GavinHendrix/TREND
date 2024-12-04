@@ -17,8 +17,9 @@
 
 <script>
     async function fetchMovies() {
+        const userId = "{{ current_user.id }}";
         try {
-            const response = await fetch('/api/tmdb');
+            const response = await fetch(`/api/tmdb?user_id=${userId}`);
             const data = await response.json();
 
             const movieList = document.getElementById('movie-list');

@@ -6,6 +6,7 @@ from app.src.db.user import User
 from app.src.db.survey_pref import SurveyPreference
 from app.src.db.dining_survey import DiningSurvey
 from app.src.db.activity_survey import ActivitySurvey
+from app.src.db.movie_survey import MovieSurvey
 from app.src.config import get_config
 from dotenv import load_dotenv
 from pathlib import Path
@@ -48,11 +49,12 @@ def create_app(name):
     from app.src.surv.activity_questions import activity_survey_bp
     from app.src.surv.movie_questions import movie_survey_bp
     from app.src.api.dining_places import dining_places_bp
+    from app.src.api.dislike_dining import dislike_dining_bp
     from app.src.api.activities_places import activities_places_bp
+    from app.src.api.dislike_activity import dislike_activity_bp
     from app.src.rec.preferences import survey_preference_bp
     # from app.src.api.openai import openai_bp
     from app.src.api.tmdb import tmdb_bp
-    from app.src.api.dislike_dining import dislike_dining_bp
 
     app.register_blueprint(login_bp)
     app.register_blueprint(register_bp)
@@ -67,6 +69,7 @@ def create_app(name):
     app.register_blueprint(dining_places_bp, url_prefix='/api')
     app.register_blueprint(dislike_dining_bp, url_prefix='/api')
     app.register_blueprint(activities_places_bp, url_prefix='/api')
+    app.register_blueprint(dislike_activity_bp, url_prefix='/api')
     app.register_blueprint(survey_preference_bp)
     # app.register_blueprint(openai_bp, url_prefix='/api')
     app.register_blueprint(tmdb_bp, url_prefix='/api')

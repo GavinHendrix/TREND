@@ -11,6 +11,7 @@ class ActivitySurvey(db.Model):
     question6 = db.Column(db.String(255)) 
     question7 = db.Column(db.String(255)) 
     question8 = db.Column(db.String(255))  
-    question9 = db.Column(db.String(255)) 
+    question9 = db.Column(db.String(255))
+    user_dislike = db.Column(db.String(255), nullable=True, default=None)
 
     user = db.relationship('User', backref=db.backref('ActivitySurvey', lazy=True))

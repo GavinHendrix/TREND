@@ -1,34 +1,30 @@
-# Python Runtime as Parent Image
+# Use a Python image
 FROM python:3.12
 
-# Set Working Directory
+# Set the working directory
 WORKDIR /app
 
-# Copy Only Necessary Files to Leverage Docker Caching
-COPY requirements.txt Makefile ./
+# Copy the project files into the container
+COPY . /app
 
-# Install System Dependencies for PyInstaller
+# Install system dependencies
 RUN apt-get update && apt-get install -y \
-    build-essential \
-    libssl-dev \
-    libffi-dev \
-    python3-dev \
-    && rm -rf /var/lib/apt/lists/*
+    libpq-dev gcc && \
+    rm -rf /var/lib/apt/lists/*
 
-# Global PyInstaller Install
-RUN pip install pyinstaller
+# Create a virtual environment
+RUN python -m venv /venv
 
-# Check Python Version and Install Dependencies via Makefile
-RUN make check-python install
+# Activate virtual environment and install Python dependencies
+ENV PATH="/venv/bin:$PATH"
+RUN pip install --upgrade pip && \
+    pip install -r requirements.txt
 
-# Copy Entire Project to Container
-COPY . .
+# Set the prot to listen on
+ENV PORT=${PORT:-5050}
 
-# Build Executable
-RUN make build-docker
-
-# Expose Port
+# Expose the Flask port
 EXPOSE 5050
 
-# Set Default Command to Run Executable
-CMD ["make run"]
+# Set the entry point to run.py
+CMD ["python", "run.py"]

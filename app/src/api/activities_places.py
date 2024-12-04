@@ -41,6 +41,9 @@ def get_nearby_places():
 
     survey_response = ActivitySurvey.query.filter_by(user_id=user_id).first()
 
+    # Get disliked activities names
+    disliked_places = survey_response.user_dislike.split(',') if survey_response.user_dislike else []
+
     radius_m = 5000 # default value (5m)
     if survey_response.question2:
         radius_km = int(survey_response.question2)
@@ -93,6 +96,25 @@ def get_nearby_places():
     
     if data['status'] == 'ZERO_RESULTS':
         return jsonify({'error': 'No places found near your location'}), 404
+    
+    filtered_results = [
+        place for place in data.get('results', [])
+        if place.get('name') not in disliked_places
+    ]
+
+    if not filtered_results:
+        return jsonify({'error': 'No places found after filtering dislikes.'}), 404
+    
+    filtered_with_photos = []
+    for place in filtered_results:
+        if 'photos' in place and len(place['photos']) > 0:
+            photo_reference = place['photos'][0]['photo_reference']
+            photo_url = f"https://maps.googleapis.com/maps/api/place/photo?maxwidth=300&photoreference={photo_reference}&key={GOOGLE_API_KEY}"
+        else:
+            photo_url = 'https://via.placeholder.com/300x150'
+
+        place['photo_url'] = photo_url
+        filtered_with_photos.append(place)
 
     # return jsonify(data)
-    return jsonify({'results': data.get('results', [])})
+    return jsonify({'results': filtered_with_photos})

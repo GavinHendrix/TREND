@@ -14,83 +14,179 @@
         <h2 class="text-center">Movie Preferences Survey</h2>
         <form action="{{ url_for('movie_survey.msurvey') }}" method="POST">
             <div class="mb-3">
-                <label for="question1" class="form-label">WEFLJWEFIE</label>
+                <label for="question1" class="form-label">Language</label>
                 <select class="form-select" id="question1" name="question1" required>
-                    <option value="Italian">Italian</option>
-                    <option value="Mexican">Mexican</option>
-                    <option value="Indian">Indian</option>
-                    <option value="Chinese">Chinese</option>
-                    <option value="Mediterranean">Mediterranean</option>
-                    <option value="American">American</option>
-                    <option value="Japanese">Japanese</option>
-                    <option value="Other">Other</option>
+                    <option value="en-US">English</option>
+                    <option value="spanish">Spanish</option>
+                    <option value="french">French</option>
+                    <option value="german">German</option>
                 </select>
             </div>
             <div class="mb-3">
-                <label for="question2" class="form-label">WEFLJWEFIE</label>
-                <input type="range" class="form-range" id="question2" name="question2" min="0" max="50" step="1">
-                <small>0 kilometers - 50+ kilometers</small>
+                <label for="question2" class="form-label">Liked Genres</label>
+                <div id="question2">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="action" name="question2[]" value="28">
+                        <label class="form-check-label" for="action">Action</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="adventure" name="question2[]" value="12">
+                        <label class="form-check-label" for="adventure">Adventure</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="animation" name="question2[]" value="16">
+                        <label class="form-check-label" for="animation">Animation</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="comedy" name="question2[]" value="35">
+                        <label class="form-check-label" for="comedy">Comedy</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="crime" name="question2[]" value="80">
+                        <label class="form-check-label" for="crime">Crime</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="documentary" name="question2[]" value="99">
+                        <label class="form-check-label" for="documentary">Documentary</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="drama" name="question2[]" value="18">
+                        <label class="form-check-label" for="drama">Drama</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="family" name="question2[]" value="10751">
+                        <label class="form-check-label" for="family">Family</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="fantasy" name="question2[]" value="14">
+                        <label class="form-check-label" for="fantasy">Fantasy</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="history" name="question2[]" value="36">
+                        <label class="form-check-label" for="history">History</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="horror" name="question2[]" value="27">
+                        <label class="form-check-label" for="horror">Horror</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="music" name="question2[]" value="10402">
+                        <label class="form-check-label" for="music">Music</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="mystery" name="question2[]" value="9648">
+                        <label class="form-check-label" for="mystery">Mystery</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="romance" name="question2[]" value="10749">
+                        <label class="form-check-label" for="romance">Romance</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="sci-fi" name="question2[]" value="878">
+                        <label class="form-check-label" for="sci-fi">Science Fiction</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="tv-movie" name="question2[]" value="10770">
+                        <label class="form-check-label" for="tv-movie">TV Movie</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="thriller" name="question2[]" value="53">
+                        <label class="form-check-label" for="thriller">Thriller</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="war" name="question2[]" value="10752">
+                        <label class="form-check-label" for="war">War</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="western" name="question2[]" value="37">
+                        <label class="form-check-label" for="western">Western</label>
+                    </div>
+                </div>
             </div>
             <div class="mb-3">
-                <label for="question3" class="form-label">WEFLJWEFIE</label>
-                <select class="form-select" id="question3" name="question3" multiple required>
-                    <option value="Vegan">Vegan</option>
-                    <option value="Vegetarian">Vegetarian</option>
-                    <option value="Gluten-Free">Gluten-Free</option>
-                    <option value="Halal">Halal</option>
-                    <option value="Kosher">Kosher</option>
-                    <option value="No Restrictions">No Restrictions</option>
-                </select>
+                <label for="question3" class="form-label">Disliked Genres</label>
+                <div id="question3">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="action-disliked" name="question3[]" value="28">
+                        <label class="form-check-label" for="action-disliked">Action</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="adventure-disliked" name="question3[]" value="12">
+                        <label class="form-check-label" for="adventure-disliked">Adventure</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="animation-disliked" name="question3[]" value="16">
+                        <label class="form-check-label" for="animation-disliked">Animation</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="comedy-disliked" name="question3[]" value="35">
+                        <label class="form-check-label" for="comedy-disliked">Comedy</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="crime-disliked" name="question3[]" value="80">
+                        <label class="form-check-label" for="crime-disliked">Crime</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="documentary-disliked" name="question3[]" value="99">
+                        <label class="form-check-label" for="documentary-disliked">Documentary</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="drama-disliked" name="question3[]" value="18">
+                        <label class="form-check-label" for="drama-disliked">Drama</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="family-disliked" name="question3[]" value="10751">
+                        <label class="form-check-label" for="family-disliked">Family</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="fantasy-disliked" name="question3[]" value="14">
+                        <label class="form-check-label" for="fantasy-disliked">Fantasy</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="history-disliked" name="question3[]" value="36">
+                        <label class="form-check-label" for="history-disliked">History</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="horror-disliked" name="question3[]" value="27">
+                        <label class="form-check-label" for="horror-disliked">Horror</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="music-disliked" name="question3[]" value="10402">
+                        <label class="form-check-label" for="music-disliked">Music</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="mystery-disliked" name="question3[]" value="9648">
+                        <label class="form-check-label" for="mystery-disliked">Mystery</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="romance-disliked" name="question3[]" value="10749">
+                        <label class="form-check-label" for="romance-disliked">Romance</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="sci-fi-disliked" name="question3[]" value="878">
+                        <label class="form-check-label" for="sci-fi-disliked">Science Fiction</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="tv-movie-disliked" name="question3[]" value="10770">
+                        <label class="form-check-label" for="tv-movie-disliked">TV Movie</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="thriller-disliked" name="question3[]" value="53">
+                        <label class="form-check-label" for="thriller-disliked">Thriller</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="war-disliked" name="question3[]" value="10752">
+                        <label class="form-check-label" for="war-disliked">War</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="western-disliked" name="question3[]" value="37">
+                        <label class="form-check-label" for="western-disliked">Western</label>
+                    </div>
+                </div>
             </div>
             <div class="mb-3">
-                <label for="question4" class="form-label">How important is ambiance to you when dining out?</label>
-                <input type="range" class="form-range" id="question4" name="question4" min="0" max="10" step="1">
-                <small>0 (Not important) - 10 (Extremely important)</small>
-            </div>
-            <div class="mb-3">
-                <label for="question5" class="form-label">What is your preferred price range for dining?</label>
-                <select class="form-select" id="question5" name="question5" required>
-                    <option value="Budget ($)">Budget ($)</option>
-                    <option value="Moderate ($$)">Moderate ($$)</option>
-                    <option value="Expensive ($$$)">Expensive ($$$)</option>
-                    <option value="Luxury ($$$$)">Luxury ($$$$)</option>
-                </select>
-            </div>
-            <div class="mb-3">
-                <label for="question6" class="form-label">What is your preferred meal of the day to dine out?</label>
-                <select class="form-select" id="question6" name="question6" required>
-                    <option value="Breakfast">Breakfast</option>
-                    <option value="Brunch">Brunch</option>
-                    <option value="Lunch">Lunch</option>
-                    <option value="Dinner">Dinner</option>
-                </select>
-            </div>
-            <div class="mb-3">
-                <label for="question7" class="form-label">Do you prefer fast-casual dining or full-service restaurants?</label>
-                <select class="form-select" id="question7" name="question7" required>
-                    <option value="Fast-Casual">Fast-Casual</option>
-                    <option value="Full-Service">Full-Service</option>
-                    <option value="No Preference">No Preference</option>
-                </select>
-            </div>
-            <div class="mb-3">
-                <label for="question8" class="form-label">How willing are you to try new or unfamiliar restaurants or cuisines?</label>
-                <input type="range" class="form-range" id="question8" name="question8" min="0" max="10" step="1">
-                <small>0 (Not willing) - 10 (Very willing)</small>
-            </div>
-            <div class="mb-3">
-                <label for="question9" class="form-label">Do you prefer restaurants that offer takeout or delivery options?</label>
-                <select class="form-select" id="question9" name="question9" required>
-                    <option value="Dine-In Only">Dine-In Only</option>
-                    <option value="Takeout">Takeout</option>
-                    <option value="Delivery">Delivery</option>
-                    <option value="No Preference">No Preference</option>
-                </select>
-            </div>
-            <div class="mb-3">
-                <label for="question10" class="form-label">How important is sustainability or locally-sourced ingredients in your dining choices?</label>
-                <input type="range" class="form-range" id="question10" name="question10" min="0" max="10" step="1">
-                <small>0 (Not important) - 10 (Extremely important)</small>
+                <label for="question4" class="form-label">Released After When?</label>
+                <input type="date" class="form-control" id="question4" name="question4" min="0" max="10" step="1">
             </div>
             <button type="submit" class="btn btn-primary">Submit Survey</button>
         </form>
