@@ -2,7 +2,8 @@ from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_login import login_user
 from bcrypt import checkpw
 from app.src.db.user import User
-from app.src.db.survey import Survey
+# from app.src.db.dining_survey import DiningSurvey
+from app.src.db.survey_pref import SurveyPreference
 
 login_bp = Blueprint('login', __name__)
 
@@ -17,8 +18,8 @@ def login():
             login_user(user)
             flash('Login successful!', 'success')
 
-            if not Survey.query.filter_by(user_id=user.id).first():
-                return redirect(url_for('survey.survey'))
+            if not SurveyPreference.query.filter_by(user_id=user.id).first():
+                return redirect(url_for('survey_preference.set_preferences_form'))
 
             return redirect(url_for('home'))
         else:
