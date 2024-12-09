@@ -1,6 +1,7 @@
+from sqlalchemy import Null
 from app.src.db.init import db
 
-class Survey(db.Model):
+class DiningSurvey(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     question1 = db.Column(db.String(255))  # Cuisine preference
@@ -13,5 +14,6 @@ class Survey(db.Model):
     question8 = db.Column(db.Integer)      # Willingness to try new things
     question9 = db.Column(db.String(255))  # Takeout or delivery preference
     question10 = db.Column(db.Integer)     # Sustainability importance
+    user_dislike = db.Column(db.String(255), nullable=True, default=None)
 
-    user = db.relationship('User', backref=db.backref('survey', lazy=True))
+    user = db.relationship('User', backref=db.backref('DiningSurvey', lazy=True))
