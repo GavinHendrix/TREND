@@ -88,8 +88,7 @@ def get_nearby_places():
         'key': GOOGLE_API_KEY,
         'keyword': combined_keyword_query,
         'minprice': minprice,
-        'maxprice': maxprice,
-        'opening_hours': {'open_now': True}
+        'maxprice': maxprice
     }
     response = requests.get(PLACES_URL, params=params)
     data = response.json()
